@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR=$(readlink -e $(dirname $0))
+
+. $(dirname $0)/script/functions.sh
+
+if [[ $1 == "dev" ]]; then
+    bash -c "cd ${SCRIPT_DIR} && ${SUDO_CMD} docker-compose -f docker-compose.dev.yml up -d --build"
+else
+    bash -c "cd ${SCRIPT_DIR} && ${SUDO_CMD} docker-compose -f docker-compose.yml up -d --build"
+fi

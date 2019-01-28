@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  kakdela-postgresql:
+    build: build/postgresql
+    image: kakdela/postgresql
+    volumes:
+     - "./volumes/pgdata:/var/lib/postgresql/data"
+     - "./volumes/data:/opt/data"
+    tmpfs:
+     - /run
+     - /tmp
+    ports:
+     - "127.0.0.1:5432:5432"
+    networks:
+     - kakdela
+  kakdela-redis:
+    image: redis:3.0
+    ports:
+     - "127.0.0.1:6379:6379"
+    networks:
+     - kakdela
+
+networks:
+  kakdela:
+    external: true

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+. $(dirname $0)/script/functions.sh
+
+if [[ $1 == "typeorm" ]]; then
+    node_backend node_modules/typeorm/cli.js ${@:2}
+    exit 0
+fi
