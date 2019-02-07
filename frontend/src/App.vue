@@ -1,14 +1,5 @@
 <template>
-  <div>
-    <div>
-      <span class="font-weight-light">
-        Анонимная социальная сеть для криптопартизан. Версия 0.0.1
-      </span>
-    </div>
-    <div>
-      <ChatRoom/>
-    </div>
-  </div>
+  <ChatRoom/>
 </template>
 
 <script>
@@ -26,3 +17,30 @@ export default {
   },
 };
 </script>
+
+<style>
+  @font-face {
+    font-family: 'SourceSansPro Regular';
+    src: url('assets/fonts/SourceSansPro-Regular.ttf');
+  }
+
+  @font-face {
+    font-family: 'SourceSansPro Bold';
+    src: url('assets/fonts/SourceSansPro-Bold.ttf');
+  }
+
+  body {
+    background: #f56857;
+    margin: 0;
+    font-family: 'SourceSansPro Regular', sans-serif;
+    font-size: 18px;
+    color: white;
+  }
+
+  @media screen and (min-width: 1472px) {
+  .container {
+    max-width: auto;
+    width: auto;
+  }
+}
+</style>

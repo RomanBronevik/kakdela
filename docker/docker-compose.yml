@@ -25,7 +25,7 @@ services:
     build: build/node
     image: kakdela/node
     volumes:
-     - "../backend:/src"
+     - "../backend_old:/src"
     ports:
      - "127.0.0.1:3335:3333"
      - "9229:9229"

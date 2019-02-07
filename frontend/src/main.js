@@ -1,9 +1,22 @@
 import Vue from 'vue';
-import App from './App.vue';
+import Buefy from 'buefy';
+import 'buefy/dist/buefy.css';
+import './registerServiceWorker';
+import VueSocketIO from 'vue-socket.io';
 import router from './router';
 import store from './store';
-import './registerServiceWorker';
+import App from './App.vue';
 
+Vue.use(new VueSocketIO({
+  debug: true,
+  connection: 'http://localhost:3333',
+  vuex: {
+    store,
+    actionPrefix: 'SOCKET_',
+    mutationPrefix: 'SOCKET_',
+  },
+}));
+Vue.use(Buefy);
 Vue.config.productionTip = false;
 
 new Vue({
