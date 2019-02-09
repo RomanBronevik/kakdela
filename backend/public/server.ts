@@ -1,9 +1,16 @@
-import app from "../src/Application";
+import {app, poolManager} from "../src/Application";
+import { createServer, Server } from "http";
 import ChatServer from "../src/ChatServer";
 
-app.listen(3000,  () => {
-    console.log("express server is listening on port 3000");
+const server = createServer(app);
+server.listen(3334,  () => {
+    console.log("express server is listening on port 3334");
 });
 
-const chatServer = new ChatServer(app);
+
+const chatServer = new ChatServer(
+    server,
+    poolManager.get("adult"),
+    poolManager.get("generic"),
+);
 chatServer.run();

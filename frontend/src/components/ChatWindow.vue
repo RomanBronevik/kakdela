@@ -28,17 +28,13 @@ export default {
     connect() {
       console.log('socket connected');
     },
-    chatMessage(message) {
+    responseMsg(message) {
       this.messages.push(message);
     },
   },
   methods: {
     sendMessage() {
-      const messageToSend = {
-        user: 'Moofik',
-        message: this.message,
-      };
-      this.$socket.emit('chatMessage', messageToSend);
+      this.$socket.emit('requestMsg', this.message);
       this.message = '';
     },
   },

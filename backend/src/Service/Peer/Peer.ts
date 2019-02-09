@@ -1,9 +1,9 @@
 import Client from "../Client/Client";
 
 export default class Peer {
-    private client: Client = null;
+    private readonly client: Client = null;
     private partner: Client = null;
-    private identifier: number = null;
+    private room: string;
 
     /**
      * @param client - peer owner
@@ -30,15 +30,43 @@ export default class Peer {
     /**
      * Returns peer identifier
      */
-    public getPeerIdentifier(): number {
-        return !this.identifier ? 0 : this.identifier;
+    public getPeerIdentifier(): any {
+        return this.getClient().getSocketId();
     }
 
     /**
-     * Broker message from client to its partner.
-     * @param payload
+     * @param room
      */
-    public communicate(payload: string): void {
+    public joinRoom(room: string) {
+        this.room = room;
 
+        this.client
+            .getSocket()
+            .join(room);
+    }
+
+    public communicate() {
+        this.client
+            .getSocket()
+            .on("requestMsg", (msg: any) => this.publish(msg));
+    }
+
+    /**
+     * @param message
+     */
+    private publish(message: any) {
+        if (!this.partner) {
+            throw new Error("Have no peer partner to publish");
+        }
+
+        console.log("Publish message " + message);
+
+        this.client
+            .getSocket()
+            .emit("responseMsg", {user: "Вы", message});
+
+        this.partner
+            .getSocket()
+            .emit("responseMsg", {user: "Аноним", message});
     }
 }

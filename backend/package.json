@@ -23,6 +23,8 @@
     "tslint": "^5.12.1"
   },
   "devDependencies": {
+    "inversify": "^5.0.1",
+    "reflect-metadata": "^0.1.13",
     "typescript": "^3.3.1"
   }
 }

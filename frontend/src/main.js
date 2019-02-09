@@ -9,7 +9,7 @@ import App from './App.vue';
 
 Vue.use(new VueSocketIO({
   debug: true,
-  connection: 'http://localhost:3333',
+  connection: 'http://localhost:3334',
   vuex: {
     store,
     actionPrefix: 'SOCKET_',
