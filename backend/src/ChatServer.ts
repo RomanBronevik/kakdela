@@ -1,28 +1,42 @@
 import * as io from "socket.io";
-import * as express from "express";
+import { Server } from "http";
 import Pool from "./Service/Pool/Pool";
 import Peer from "./Service/Peer/Peer";
 import Client from "./Service/Client/Client";
 
 export default class ChatServer {
     private io: SocketIO.Server;
+    private genericPool: Pool;
+    private adultPool: Pool;
 
     /**
-     * @param app
+     * @param server
+     * @param adultPool
+     * @param genericPool
      */
-    constructor(app: express.Application) {
-        this.io = io.listen(app);
+    constructor(
+        server: Server,
+        adultPool: Pool,
+        genericPool: Pool,
+    ) {
+        this.io = io.listen(server);
+        this.genericPool = genericPool;
+        this.adultPool = adultPool;
     }
 
     public run() {
-        const pool = new Pool();
-
-        this.io.on("connect", (socket: any) => {
+        this.io.on("connection", (socket: any) => {
             console.log("Client connected, socket id: " + socket.id);
-            const client = new Client(socket.id);
+            const client = new Client(socket);
             const peer = new Peer(client);
-            pool.register(peer);
-            pool.findPartner(peer);
+            this.genericPool.register(peer);
+
+            const partnerPeer = this.genericPool.findPartner(peer);
+
+            if (null !== partnerPeer) {
+                peer.communicate();
+                partnerPeer.communicate();
+            }
         });
     }
 }
